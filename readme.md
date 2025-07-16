@@ -110,5 +110,32 @@ Proyecto/
 > * Otra para el registro, login y autenticación.
 
 
+* Nota:
+En la urls principal solo en esa va a ver admin en la demas no
+
+## Vinculamos Nuestras Urls de las Apps con la principal
+
+Remplazamos esto:
+```bash
+from django.urls import path
+```
+
+A
+
+```bash
+from django.urls import path, include
+```
+
+Y despues en el urls principal agregamos en la parte de urlpatterns
+```bash
+path('<nombre_de_la_url>/', include('<nombre_de_la_app>.urls'))
+```
+
+y en la urls de la app en el urls de la misma ponemos la function del views ejemplo (Teniendo en cuenta que ya importamos el views en la urls de la app):
+
+```bash
+path('<nombre_de_la_url>/', <function>)
+```
+
 
 ---
