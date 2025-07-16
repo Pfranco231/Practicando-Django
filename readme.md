@@ -137,5 +137,43 @@ y en la urls de la app en el urls de la misma ponemos la function del views ejem
 path('<nombre_de_la_url>/', <function>)
 ```
 
+## Render en las views 
+Se pueden usar paginas html para no hacer un returnar una httpsResponse
+con render por ejemplo:
+
+```bash
+def saludo_con_template(request):
+    return render(request, "<url>/pagina.html")
+```
+
+pero debemos crear una carpeta que va a contener el html 
+
+```bash
+<el_nombre_de_la_app>/templates/<nombre_DE_LA_APP>/<nombre_del_archivo>.html
+```
+
+*PEROO:
+necesitamos que nuestra app (en este caso mi_primera_app este como figurada en installed apps del settings en la carpeta raiz asi)
+
+```bash
+settings.py
+
+
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+
+
+
+
+    'mi_primera_app',
+]
+```
+
+
 
 ---
