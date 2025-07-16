@@ -153,7 +153,7 @@ pero debemos crear una carpeta que va a contener el html
 ```
 
 *PEROO:
-necesitamos que nuestra app (en este caso mi_primera_app este como figurada en installed apps del settings en la carpeta raiz asi)
+necesitamos que nuestra app (en este caso mi_primera_app) este como figurada en installed apps del settings en la carpeta raiz asi
 
 ```bash
 settings.py
@@ -174,6 +174,18 @@ INSTALLED_APPS = [
 ]
 ```
 
+### Migraciones
+Es para la base de datos y siempre te aparece en rojo para ejecutar cuando abris el puerto local 
+```bash
+python3 manage.py migrate
+```
+Todo esto es para poder crear y que funcione la bases de datos
 
+## Vamos a ver los models
+
+El archivo models sirve para poder crear las tablas de la base de datos
+
+Bueno Dejo por aca 
+me quede en el aparta de playground intermedio parte 1 2:23:09
 
 ---
