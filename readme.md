@@ -276,4 +276,22 @@ va a pedir username y contrasenia
 
 sirve para controlar los modelos de manera visual y practica 
 
+pero debemos registrar nuestro modelos en donde? en admin de cada aplicacion 
+y se hace de la siguiente manera
+
+```bash
+#primero importamos el modelo
+from .models import Familia #o el model que tengamos 
+
+#Creamos una lista para que se guarde todo de una y no tengamos que hacer uno por uno
+register_models = [Familia]
+
+#despues ponemos un
+admin.site.register(register_models)
+```
+
+## 🔥 aspecto de la pagina 
+
+### Herencia de entre paginas html para que se vea todo mas lindo
+
 ---

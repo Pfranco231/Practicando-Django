@@ -14,4 +14,4 @@ class Familia(models.Model):
     fecha_nacimiento = models.DateField()
 
     def __str__(self):
-        return f"{self.nombre} {self.apellido}, Edad: {self.edad}, Fecha de Nacimiento: {self.fecha_nacimiento}"
+        return f"{self.nombre} {self.apellido}, Edad: {self.edad}"
