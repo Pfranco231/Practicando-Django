@@ -244,5 +244,36 @@ y despues en html creado podemos usar eso
 <p>Nombre: {{nombre}}</p>
 ```
 
+y me quede por empezar la parte 2 de playground intermedio
+
+
+## La parte admin
+
+esta parte vamos a ver como usa el admin de django, para que se usa y como te puede hacer la vida mas sencilla
+
+### Como se accede:
+si es local es esta direccion:
+```bash
+http://127.0.0.1:8000/admin
+```
+y si esta subido a un servidor seria
+
+```bash
+http://<ip-del-servidor>/admin
+```
+
+PEROOOO:
+se necesita crear una cuenta admin para poder acceder
+se hara con:
+
+```bash
+python3 manage.py createsuperuser
+```
+
+va a pedir username y contrasenia
+
+### Para que sirve
+
+sirve para controlar los modelos de manera visual y practica 
 
 ---
