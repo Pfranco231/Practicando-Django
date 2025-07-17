@@ -183,9 +183,66 @@ Todo esto es para poder crear y que funcione la bases de datos
 
 ## Vamos a ver los models
 
-El archivo models sirve para poder crear las tablas de la base de datos
+El archivo models sirve para poder crear las tablas de la base de datos SQLITE
 
-Bueno Dejo por aca 
-me quede en el aparta de playground intermedio parte 1 2:23:09
+Bueno Aca hace una clases
+haciendo mi pequenia base de datos lista con clases
+
+```bash
+class Familia(models.Model):
+    #Primer Campo, CharField para almacenar el nombre
+    nombre = models.CharField(max_length=100)
+    apellido = models.CharField(max_length=100)
+    #3er campo, IntegerField para almacenar un número entero
+    edad = models.IntegerField()
+    fecha_nacimiento = models.DateField()
+
+    def __str__(self):
+        return f"{self.nombre} {self.apellido}, Edad: {self.edad}, Fecha de Nacimiento: {self.fecha_nacimiento}"
+```
+y para que se intrege debemos hacer un python makemigrations (que lo que hace es hacer un script automatico) 
+para que aparezca en la base de datos
+
+```bash
+python3 manage.py makemigrations
+```
+
+y despues 
+
+```bash
+python3 manage.py migrate
+```
+todo esto sirve para meter nuestras cosas en la base de datos
+
+vamos a hacer un mini ejemplo de como agregar
+
+en el urls.py(de la aplicaion y importada la funcion de views.py) ponemos:
+
+```bash
+   path('crear-familia/<str:nombre>/', crear_familia),
+```
+
+y bueno en views.py creamos la funcion
+```bash
+from .models import Familia
+
+def crear_familia(request, nombre):
+    if nombre is not None:
+        # Creamos una instancia del modelo Familia
+        familia = Familia(nombre=nombre, apellido="Apellido", edad=30, fecha_nacimiento="1993-01-01")
+        # Guardamos la instancia en la base de datos
+        familia.save()
+        return HttpResponse(f"Familia {familia.nombre} creada exitosamente.")
+        #tambien se puede crear con una render de html 
+        return render(request, "mi_primera_app/familia_creada.html")
+        #para poder usar valores en el html del back aca python usamos  (si estamos inyectando un diccionario)
+        return render(request, "mi_primera_app/familia_creada.html", {"nombre" : nombre})
+```
+y despues en html creado podemos usar eso
+
+```bash
+<p>Nombre: {{nombre}}</p>
+```
+
 
 ---
