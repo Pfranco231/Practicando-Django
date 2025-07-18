@@ -294,4 +294,71 @@ admin.site.register(register_models)
 
 ### Herencia de entre paginas html para que se vea todo mas lindo
 
+Pasos a seguir
+
+1. Crear una carpeta llmada templates  y que la estructura quede asi
+```bash
+Proyecto/
+├── manage.py
+├── nombre_del_proyecto/
+│   └── settings.py
+│   └── urls.py  ← rutas generales
+├── nombre_de_la_app/
+├── templates
+
+```
+
+pero para que Django lo tome debemos configurar el settings de vuelta para que acepte eso con:
+en la parte de templates ponemos esto:
+
+```bash
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [BASE_DIR / 'templates'], #Esta parte es la que modificamos
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+]
+```
+
+2. Creamos un archivo html dentro de la carpeta templates/
+que se va a encargar de ser la base de todo
+
+
+
+#### Ejemplo tomando base en aplicaciones
+creamos una nueva URL en el archivo URLS.PY en la app algo asi
+
+```bash
+#        home ase referencia a la funcion que haremos en views 
+path('', home, name='inicio'),
+```
+y despues en views.py hacemos la funcion yo en este caso hice esto
+
+```bash
+def home(request):
+    return render(request, "mi_primer_app/inicio.html")
+    #renderice una pagina EN BLANCO que va a heredar todo del template
+```
+
+es muy sencillo hederar todo lo del padre con este comando al principio del html vacio ponemos
+
+```bash
+{% extends "index.html" %}
+```
+
+y como pisamos las cosas del padre para poner nuestras cosas, sencillo con esto
+bueno en el archivo padre ponemos las cosas que podemos modificar por ejemplo
+```bash
+
+<h1> {% block title %} Titulo de la pagina {% endblock %}</h1>
+```
+
 ---

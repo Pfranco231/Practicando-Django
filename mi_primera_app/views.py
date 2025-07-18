@@ -8,6 +8,9 @@ from django.http import HttpResponse
 def saludo(request):
     return HttpResponse("Hola Mundo")
 
+def home(request):
+    return render(request, "mi_primer_app/inicio.html")
+
 def saludo_con_template(request):
     return render(request, "mi_primer_app/saludo.html")
 
