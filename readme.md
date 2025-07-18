@@ -1,184 +1,172 @@
-# 🐍 Django - Guía Inicial del Proyecto
 
-Este documento explica paso a paso cómo iniciar un proyecto en Django, crear y usar entornos virtuales, organizar las aplicaciones dentro del proyecto y generar archivos de requerimientos. Está pensado para quienes están comenzando y quieren tener una referencia clara.
+# 🐍 Guía Inicial para Proyectos Django
 
----
-
-## ✨ Comenzar un Proyecto Django
-
-1. **Crear el proyecto principal**
-   Desde la terminal, ejecutar:
-
-   ```bash
-   /usr/local/bin/python3.13 -m django startproject nombre_del_proyecto
-   ```
-
-2. **Ingresar a la carpeta del proyecto**
-
-   ```bash
-   cd nombre_del_proyecto
-   ```
-   Antes de empezar con el paso tres tenemos que crear el entorno virtual
-
-3. **Ejecutar el servidor de desarrollo**
-
-   ```bash
-   python3 manage.py runserver
-   ```
+Este documento explica paso a paso cómo iniciar y organizar un proyecto Django. Incluye entorno virtual, estructura, rutas, templates, formularios, administración y funciones útiles como búsqueda.
 
 ---
 
-### **Advertencia:** esto es despues de crear nuestra aplicaion
-## 🔀 Rutas (`urls.py`)
+## 🚀 1. Iniciar un Proyecto Django
 
-* El archivo `urls.py` del proyecto principal define las rutas generales.
-* Cada app puede tener su propio `urls.py`, lo que permite mantener el código organizado.
-* Para conectar las URLs de una app con las del proyecto:
-
-  1. En el archivo `urls.py` del proyecto:
-
-  ```python
-  from django.urls import path, include
-
-  urlpatterns = [
-      path('mi_app/', include('mi_app.urls')),
-  ]
-  ```
-
-  2. En el archivo `urls.py` de la app:
-
-  ```python
-  from django.urls import path
-  from . import views
-
-  urlpatterns = [
-      path('saludo/', views.saludo),
-  ]
-  ```
-
----
-
-## 🧪 Entorno Virtual (venv)
-
-1. **Crear un entorno virtual**
-
-   ```bash
-   python3 -m venv venv
-   ```
-
-2. **Activar (Linux)**
-
-   ```bash
-   source venv/bin/activate
-   ```
-
-3. **Instalar paquetes necesarios**
-   ```bash
-   pip install nombre_paquete
-   ```
-   
-3. **Desactivar**
-
-   ```bash
-   deactivate
-   ```
-
-4. **Eliminar entorno virtual** (opcional):
-
-   ```bash
-   rm -rf venv
-   ```
-
----
-
-## 📃 Requerimientos del Proyecto
-
-Exportar los paquetes instalados para compartir o desplegar:
+### 1.1 Crear el Proyecto Principal
 
 ```bash
-pip freeze > requirements.txt
+/usr/local/bin/python3.13 -m django startproject nombre_del_proyecto
+cd nombre_del_proyecto
+```
+
+### 1.2 Crear Entorno Virtual
+
+```bash
+python3 -m venv venv
+# source es para entrar al entorno virtual
+source venv/bin/activate  # Windows: venv\Scripts\activate
+```
+
+### 1.3 Instalar Django
+
+```bash
+pip install django
+```
+
+### 1.4 Ejecutar el Servidor de Desarrollo
+
+```bash
+python3 manage.py runserver
 ```
 
 ---
 
-## 🧹 Crear Aplicaciones (Apps)
+## 🧱 2. Crear y Configurar Aplicaciones (Apps)
 
-Una app representa una funcionalidad específica del sistema:
+### 2.1 Crear una App
 
 ```bash
 python3 manage.py startapp nombre_de_la_app
 ```
 
-Dentro de la app:
-
-* `views.py`: contiene la lógica de las vistas.
-* `urls.py`: debe crearse manualmente para definir rutas locales.
-
-### Ejemplo de estructura
-
-```bash
-Proyecto/
-├── manage.py
-├── nombre_del_proyecto/
-│   ├── settings.py
-│   └── urls.py
-├── apps/
-│   ├── registro/
-│   ├── login/
-│   └── blog/
-```
-
-> En proyectos pequeños, se suelen usar 1 o 2 apps:
->
-> * Una para la lógica principal.
-> * Otra para autenticación (registro, login, etc.).
-
----
-
-## 🖋️ Usar `render` en Views
-
-Para retornar una página HTML desde una vista:
-
-```python
-from django.shortcuts import render
-
-def saludo(request):
-    return render(request, "mi_app/pagina.html")
-```
-
-La estructura esperada:
-
-```bash
-mi_app/
-├── templates/
-│   └── mi_app/
-│       └── pagina.html
-```
-
-Asegúrate de incluir la app en `INSTALLED_APPS` dentro de `settings.py`:
+### 2.2 Agregar App a `settings.py`
 
 ```python
 INSTALLED_APPS = [
-    ...
-    'mi_app',
+    ...,
+    'nombre_de_la_app',
 ]
 ```
 
 ---
-### **Advertencia:** esto es despues de crear el template de base
 
-## 📊 Migraciones y Base de Datos
+## 🌐 3. Rutas y Vistas
 
-Para aplicar cambios en los modelos a la base de datos:
+### 3.1 `urls.py` del Proyecto
 
-```bash
-python3 manage.py makemigrations
-python3 manage.py migrate
+```python
+from django.contrib import admin
+from django.urls import path, include
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('mi_app/', include('mi_app.urls')),
+]
 ```
 
-Cada vez que se modifiquen los modelos, hay que ejecutar `migrate`.
+### 3.2 `urls.py` de la App (crear este archivo si no existe)
 
-### Ejemplo de Modelo
+```python
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('saludo/', views.saludo),
+]
+```
+
+### 3.3 Vista de Ejemplo
+
+```python
+from django.http import HttpResponse
+
+def saludo(request):
+    return HttpResponse("Hola desde Django.")
+```
+
+---
+
+## 🖼️ 4. Templates y Herencia
+
+### 4.1 Estructura Recomendada
+
+```bash
+Proyecto/
+│   #---------------
+├── templates/
+│   └── base.html
+│   #---------------
+├── nombre_de_la_app/
+│   └── templates/
+│       └── nombre_de_la_app/
+│           └── pagina.html
+```
+
+### 4.2 Configurar `settings.py`
+
+```python
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [BASE_DIR / 'templates'], #La parte donde modificamos
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+]
+```
+
+### 4.3 Ejemplo: `base.html`
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}Mi Página{% endblock %}</title>
+</head>
+<body>
+    <header>{% block header %}Header{% endblock %}</header>
+    <main>{% block main %}{% endblock %}</main>
+    <footer>{% block footer %}© 2025{% endblock %}</footer>
+</body>
+</html>
+```
+
+### 4.4 Ejemplo: Vista con Herencia
+
+```html
+{% extends "base.html" %}
+
+{% block title %}Inicio{% endblock %}
+{% block main %}<p>Hola desde la vista heredada</p>{% endblock %}
+```
+
+---
+
+## ➕ 5. Botones y Navegación
+
+```html
+<!--             esto representa un alias -->
+<a href="{% url 'crear_curso' %}">Agregar Curso</a>
+```
+
+> 📝 Reemplaza `'crear_curso'` con el nombre real de la vista en tus URLs.
+
+---
+
+## 🗃️ 6. Migraciones y Modelos
+
+### 6.1 Modelo de Ejemplo
 
 ```python
 from django.db import models
@@ -193,34 +181,28 @@ class Familia(models.Model):
         return f"{self.nombre} {self.apellido}, Edad: {self.edad}"
 ```
 
-### Crear desde una vista
+### 6.2 Aplicar Migraciones
 
-```python
-from .models import Familia
-from django.http import HttpResponse
-
-def crear_familia(request, nombre):
-    familia = Familia(nombre=nombre, apellido="Apellido", edad=30, fecha_nacimiento="1993-01-01")
-    familia.save()
-    return HttpResponse(f"Familia {familia.nombre} creada exitosamente.")
+```bash
+python3 manage.py makemigrations
+python3 manage.py migrate
 ```
 
 ---
 
-## 📅 Panel de Administración de Django
+## 🗄️ 7. Panel de Administración
 
 ### Acceso
 
-* Local: `http://127.0.0.1:8000/admin`
-* Servidor: `http://<IP>/admin`
+- Local: `http://127.0.0.1:8000/admin`
 
-Crear superusuario:
+### Crear Superusuario
 
 ```bash
 python3 manage.py createsuperuser
 ```
 
-### Registrar modelos en el admin
+### Registrar Modelos
 
 ```python
 from django.contrib import admin
@@ -231,144 +213,66 @@ admin.site.register(Familia)
 
 ---
 
-## 📁 Templates con Herencia
+## 📄 8. Formularios con `forms.py`
 
-1. Crear carpeta `templates/` en la raiz del proyecto:
-
-```bash
-Proyecto/
-├── nombre_del_proyecto/
-├── nombre_de_la_app/
-├── templates/
-│   └── index.html
-```
-
-2. Configurar en `settings.py`:
-
-```python
-TEMPLATES = [
-    {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'], #La parte donde se modifica
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-            ],
-        },
-    },
-]
-```
-
-3. Crear archivo base `index.html`:
-
-```html
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <title>{% block title %}Mi Página{% endblock %}</title>
-</head>
-<body>
-  <header>
-    {% block header %}<h1>Bienvenido</h1>{% endblock %}
-  </header>
-  <main>
-    {% block main %}{% endblock %}
-  </main>
-  <footer>
-    {% block footer %}<p>&copy; 2025 Franco Papeschi</p>{% endblock %}
-  </footer>
-</body>
-</html>
-```
-
-4. Archivo hijo que hereda:
-
-```html
-{% extends "index.html" %}
-
-{% block title %}Inicio{% endblock %}
-{% block header %}<h1>Hola mundo</h1>{% endblock %}
-{% block main %}<p>Esta es mi primera vista con herencia de templates.</p>{% endblock %}
-```
-
----
-
-## 📋 Formularios en Django (`forms.py`)
-
-Crear archivo `forms.py` dentro de la app:
+### 8.1 Formulario de Ejemplo
 
 ```python
 from django import forms
 
 class CursoForm(forms.Form):
-    nombre = forms.CharField(max_length=100, label='Nombre del Curso')
-    comision = forms.IntegerField(label='Comisión')
+    nombre = forms.CharField(max_length=100)
+    comision = forms.IntegerField()
     fecha_inicio = forms.DateField(widget=forms.SelectDateWidget())
     fecha_fin = forms.DateField(widget=forms.SelectDateWidget())
 ```
 
-Usar `redirect` desde una vista:
+### 8.2 Redireccionar en una Vista
 
 ```python
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 
-# Redireccionar a una vista nombrada "inicio"
-return redirect('inicio')
+return redirect('inicio')  # Usa el name de la URL
 ```
 
 ---
 
-> ⚠️ Nota: Franco se quedó en el minuto 2:02 de la Parte 2 del curso Playground Intermedio de Python. Faltan 28 minutos para terminar esa sección.
+## 🔍 9. Búsqueda de Cursos
 
-## 🔎 Funcion de busqueda (Esto es mas que todo para el entregable numero n3)
+> 🧠 Esto es parte del Entregable N°3
 
-1. Creamos una url en la busqueda de la app
+### 9.1 URLs
+
 ```python
-path('curso/buscar/', buscar_cursos, name='buscar-curso')
+# mi_app/urls.py
+path('curso/', views.cursos, name='curso'),
+path('curso/buscar/', views.buscar_cursos, name='buscar-curso'),
 ```
 
-2. Realizamos la funcion en views
-```python
-def buscar_cursos(request):
-    if request.method == 'POST':
-        nombre_curso = request.POST.get('nombre_curso', '')
-        cursos = Curso.objects.filter(nombre__icontains=nombre_curso)
-        return render(request, "mi_primer_app/buscar_cursos.html", {"cursos": cursos, "nombre_curso": nombre_curso})
-    
-    return render(request, "mi_primer_app/buscar_cursos.html", {"cursos": [], "nombre_curso": ""})
-```
+### 9.2 Views
 
-3. Todo esto realizado anteriormente no va a funcionar debemos crear otra funcion en el views
-que se encarga de mostrar la funcion de buscar_cursos, debemos en las urls poner 
-```python
-path('curso', cursos, name='curso'),
-```
-
-4. y creamos la funcion en el views.py
 ```python
 def cursos(request):
     cursos = Curso.objects.all()
-    #Basicamente le pasamos todos los cursos al template
-    return render(request, "mi_primer_app/cursos.html", {"cursos": cursos})
+    return render(request, "mi_app/cursos.html", {"cursos": cursos})
 
+def buscar_cursos(request):
+    nombre = request.GET.get('nombre', '')
+    cursos = Curso.objects.filter(nombre__icontains=nombre)
+    return render(request, "mi_app/buscar_cursos.html", {"cursos": cursos, "nombre": nombre})
 ```
 
-5. En el html hacemos
+### 9.3 Formulario HTML
 
 ```html
-<!--                        Esto funciona igual que el redirect osea usamos un alias-->
 <form method="get" action="{% url 'buscar-curso' %}">
-    <label for="nombre_curso">Nombre del curso:</label>
-    <!--                                 en el campo name debe ser el campo que queremos completar -->
-    <input type="text" id="nombre_curso" name="nombre" placeholder="Ingrese el nombre del curso" value="{{ nombre }}">
+    <label for="nombre">Nombre del curso:</label>
+    <input type="text" id="nombre" name="nombre" value="{{ nombre }}">
     <button type="submit">Buscar</button>
 </form>
 ```
-y despues para que aparezcan la lista de resultados ponemos
+
+### 9.4 Mostrar Resultados
 
 ```html
 <ul>
@@ -380,9 +284,12 @@ y despues para que aparezcan la lista de resultados ponemos
 </ul>
 ```
 
-## Creacion de botones:
-en un html(cualquiera) ponemos:
-```html
-<!--             Esto es el alias en vez de poner la url completa-->
-<a href="{% url 'crear_curso' %}">Agregar Curso</a>
+---
+
+## 📦 10. `requirements.txt`
+
+Guardar dependencias:
+
+```bash
+pip freeze > requirements.txt
 ```
