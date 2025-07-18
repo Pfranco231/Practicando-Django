@@ -486,6 +486,6 @@ return redirect('inicio')
 
 y como hacemos para que funcione bueno en el html le agregamos un detalle para que vea donde lo guarda
 
-
+en la parte 2 del playground me quede en las 2:02 faltaria 28 minutos para terminarlo 
 
 ---
