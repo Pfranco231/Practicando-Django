@@ -18,6 +18,7 @@ Este documento explica paso a paso cómo iniciar un proyecto en Django, crear y 
    ```bash
    cd nombre_del_proyecto
    ```
+   Antes de empezar con el paso tres tenemos que crear el entorno virtual
 
 3. **Ejecutar el servidor de desarrollo**
 
@@ -70,6 +71,11 @@ Este documento explica paso a paso cómo iniciar un proyecto en Django, crear y 
    source venv/bin/activate
    ```
 
+3. **Instalar paquetes necesarios**
+   ```bash
+   pip install nombre_paquete
+   ```
+   
 3. **Desactivar**
 
    ```bash
