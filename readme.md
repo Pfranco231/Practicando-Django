@@ -28,6 +28,7 @@ Este documento explica paso a paso cómo iniciar un proyecto en Django, crear y 
 
 ---
 
+### **Advertencia:** esto es despues de crear nuestra aplicaion
 ## 🔀 Rutas (`urls.py`)
 
 * El archivo `urls.py` del proyecto principal define las rutas generales.
