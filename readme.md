@@ -445,5 +445,6 @@ y despues el archivo que recibio herencia de este html padre se podra modicar al
 
 {% endblock%}
 ```
+Dato importante: que cuando escribis afuera del bloque no se muestra
 
 ---

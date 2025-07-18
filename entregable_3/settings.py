@@ -1,3 +1,5 @@
+#archivo modificado por franco papeschi
+
 """
 Django settings for entregable_3 project.
 
