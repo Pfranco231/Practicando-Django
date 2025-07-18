@@ -184,7 +184,9 @@ class Familia(models.Model):
 ### 6.2 Aplicar Migraciones
 
 ```bash
+#Para crearlas
 python3 manage.py makemigrations
+#para migrarlas
 python3 manage.py migrate
 ```
 
@@ -206,9 +208,11 @@ python3 manage.py createsuperuser
 
 ```python
 from django.contrib import admin
-from .models import Familia
+from .models import Familia, Curso
 
-admin.site.register(Familia)
+register_models = [Familia, Curso]
+
+admin.site.register(register_models)
 ```
 
 ---
