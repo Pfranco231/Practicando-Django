@@ -217,7 +217,7 @@ admin.site.register(register_models)
 
 ---
 
-## 📄 8. Formularios con `forms.py`
+## 📄 8. Formularios con `forms.py` en la app(crear este archivo si no existe) 
 
 ### 8.1 Formulario de Ejemplo
 
