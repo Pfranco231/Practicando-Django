@@ -165,6 +165,7 @@ INSTALLED_APPS = [
 ```
 
 ---
+### **Advertencia:** esto es despues de crear el template de base
 
 ## 📊 Migraciones y Base de Datos
 
