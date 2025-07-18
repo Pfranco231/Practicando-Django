@@ -358,7 +358,92 @@ y como pisamos las cosas del padre para poner nuestras cosas, sencillo con esto
 bueno en el archivo padre ponemos las cosas que podemos modificar por ejemplo
 ```bash
 
-<h1> {% block title %} Titulo de la pagina {% endblock %}</h1>
+<h1> {% block nombre_que_tendra %} Titulo de la pagina {% endblock %}</h1>
+```
+
+y despues el archivo que recibio herencia de este html padre se podra modicar algo asi
+```bash
+{% block nombre_que_tendra %} cbn celeste de la abuelo o algo asi {% endblock %}
+```
+
+### EJEMPLO la index que este en templates(el padre se vera asi)
+```bash
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>{% block title %}Mi Página Personal{% endblock %}</title>
+</head>
+<body>
+
+  <header>
+    {% block header %}
+    <h1>¡Bienvenido a mi página!</h1>
+    <p>Un lugar simple, moderno y personal</p>
+    {% endblock %}
+  </header>
+
+  <nav>
+    <a href="#sobre-mi">Sobre mí</a>
+    <a href="#proyectos">Proyectos</a>
+    <a href="#contacto">Contacto</a>
+  </nav>
+
+  <main>
+    {% block main %}
+    <section id="sobre-mi">
+      <h2>Sobre mí</h2>
+      <p>Hola, soy Franco. Soy desarrollador web con pasión por la tecnología, la automatización y los servidores caseros. Me encanta aprender cosas nuevas, experimentar con proyectos propios y compartir conocimientos.</p>
+    </section>
+
+    <section id="proyectos">
+      <h2>Proyectos</h2>
+      <ul>
+        <li>Servidor con CasaOS y Jellyfin para multimedia en casa</li>
+        <li>Automatizaciones con n8n</li>
+        <li>Proyectos personales con Gitea y contenedores Docker</li>
+      </ul>
+    </section>
+
+    <section id="contacto">
+      <h2>Contacto</h2>
+      <p>Puedes escribirme a <a href="mailto:franco@email.com">franco@email.com</a> o seguirme en GitHub.</p>
+    </section>
+    {% endblock %}
+  </main>
+
+  <footer>
+    {% block footer %}
+    <p>&copy; 2025 Franco Papeschi. Todos los derechos reservados.</p>
+    <p>Creado con amor y dedicación.</p>
+    {% endblock %}
+  </footer>
+
+</body>
+</html>
+
+```
+
+#### PERO el archivo que hereda al padre es asi
+
+```bash
+{% extends "index.html" %}
+
+{% block title %}Prueba pagina{% endblock %}
+
+{% block header %}
+<h1>Hola gente como anda </h1>
+<p>todo bien</p>
+{% endblock %}
+
+{% block main %}
+<section id="sobre-mi">
+  <h2>Sobre mí</h2> 
+  <p>Hola, soy Franco. Soy desarrollador web con pasión por la tecnología, la automatización y los servidores caseros. Me encanta aprender cosas nuevas, experimentar con proyectos propios y compartir conocimientos.</p>
+</section>
+
+{% endblock%}
 ```
 
 ---
