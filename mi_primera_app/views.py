@@ -32,6 +32,7 @@ def crear_familia(request, nombre):
 
 #request siempre para render
 
+#funcion para crear curso
 def crear_curso(request):
     if request.method == 'POST':
         form = CursoForm(request.POST)
@@ -48,3 +49,18 @@ def crear_curso(request):
     elif request.method == 'GET':
         form = CursoForm()                                          #aca mandamo el formulario vacio
         return render(request, "mi_primer_app/crear_curso.html", {"form": form})
+
+
+def cursos(request):
+    cursos = Curso.objects.all()
+    #Basicamente lo que hacemos aca es traer todos los cursos de la base de datos y mostrarlos en el template
+    return render(request, "mi_primer_app/cursos.html", {"cursos": cursos})
+
+#funcion para buscar curso
+def buscar_cursos(request):
+    if request.method == 'GET':
+        nombre_curso = request.GET.get('nombre', '')
+        ## la siguiente optimiza la busqueda para por ejemplo si la persona buscar py en vez de python 
+        #igual le va a parecer
+        cursos = Curso.objects.filter(nombre__icontains=nombre_curso)
+        return render(request, "mi_primer_app/cursos.html", {"cursos": cursos, "nombre_curso": nombre_curso})

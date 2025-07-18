@@ -315,3 +315,66 @@ return redirect('inicio')
 ---
 
 > ⚠️ Nota: Franco se quedó en el minuto 2:02 de la Parte 2 del curso Playground Intermedio de Python. Faltan 28 minutos para terminar esa sección.
+
+## 🔎 Funcion de busqueda (Esto es mas que todo para el entregable numero n3)
+
+1. Creamos una url en la busqueda de la app
+```python
+path('curso/buscar/', buscar_cursos, name='buscar-curso')
+```
+
+2. Realizamos la funcion en views
+```python
+def buscar_cursos(request):
+    if request.method == 'POST':
+        nombre_curso = request.POST.get('nombre_curso', '')
+        cursos = Curso.objects.filter(nombre__icontains=nombre_curso)
+        return render(request, "mi_primer_app/buscar_cursos.html", {"cursos": cursos, "nombre_curso": nombre_curso})
+    
+    return render(request, "mi_primer_app/buscar_cursos.html", {"cursos": [], "nombre_curso": ""})
+```
+
+3. Todo esto realizado anteriormente no va a funcionar debemos crear otra funcion en el views
+que se encarga de mostrar la funcion de buscar_cursos, debemos en las urls poner 
+```python
+path('curso', cursos, name='curso'),
+```
+
+4. y creamos la funcion en el views.py
+```python
+def cursos(request):
+    cursos = Curso.objects.all()
+    #Basicamente le pasamos todos los cursos al template
+    return render(request, "mi_primer_app/cursos.html", {"cursos": cursos})
+
+```
+
+5. En el html hacemos
+
+```html
+<!--                        Esto funciona igual que el redirect osea usamos un alias-->
+<form method="get" action="{% url 'buscar-curso' %}">
+    <label for="nombre_curso">Nombre del curso:</label>
+    <!--                                 en el campo name debe ser el campo que queremos completar -->
+    <input type="text" id="nombre_curso" name="nombre" placeholder="Ingrese el nombre del curso" value="{{ nombre }}">
+    <button type="submit">Buscar</button>
+</form>
+```
+y despues para que aparezcan la lista de resultados ponemos
+
+```html
+<ul>
+    {% for curso in cursos %}
+        <li>{{ curso.nombre }} - {{ curso.fecha_inicio }}</li>
+    {% empty %}
+        <li>No se encontraron cursos.</li>
+    {% endfor %}
+</ul>
+```
+
+## Creacion de botones:
+en un html(cualquiera) ponemos:
+```html
+<!--             Esto es el alias en vez de poner la url completa-->
+<a href="{% url 'crear_curso' %}">Agregar Curso</a>
+```

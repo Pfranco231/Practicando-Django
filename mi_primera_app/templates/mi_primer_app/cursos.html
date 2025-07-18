@@ -1,0 +1,32 @@
+{% extends "index.html" %}
+
+{% block title %}Buscar Curso{% endblock %}
+
+{% block header %}
+<h1>Buscar un nuevo curso</h1>
+<p>Por favor completa el siguiente formulario:</p>
+{% endblock %}
+
+{% block main %}
+
+<!--                        Esto funciona igual que el redirect osea usamos un alias-->
+<form method="GET" action="{% url 'buscar-curso' %}">
+    <label for="nombre_curso">Nombre del curso:</label>
+    <!--                                 en el campo name debe ser el campo que queremos completar -->
+    <input type="text" id="nombre_curso" name="nombre" placeholder="Ingrese el nombre del curso" value="{{ nombre }}">
+    <button type="submit">Buscar</button>
+</form>
+
+<ul>
+    {% for curso in cursos %}
+        <li>{{ curso.nombre }} - {{ curso.fecha_inicio }}</li>
+    {% empty %}
+        <li>No se encontraron cursos.</li>
+    {% endfor %}
+</ul>
+
+<h5>No encontraste cursos? Crealos</h5>
+<a href="{% url 'crear-el-curso' %}">Agregar Curso</a>
+
+
+{% endblock%}
