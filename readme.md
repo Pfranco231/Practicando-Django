@@ -213,6 +213,7 @@ y despues
 python3 manage.py migrate
 ```
 todo esto sirve para meter nuestras cosas en la base de datos
+siempre cuando modifiquemos algo tenemos que hacer migraciones pero solo el comando migrate
 
 vamos a hacer un mini ejemplo de como agregar
 
@@ -290,7 +291,7 @@ register_models = [Familia]
 admin.site.register(register_models)
 ```
 
-## 🔥 aspecto de la pagina 
+## 🔥 Aspecto de la pagina 
 
 ### Herencia de entre paginas html para que se vea todo mas lindo
 
@@ -446,5 +447,45 @@ y despues el archivo que recibio herencia de este html padre se podra modicar al
 {% endblock%}
 ```
 Dato importante: que cuando escribis afuera del bloque no se muestra
+
+## Creacion de Formularios
+
+dentro de la app creamos una carpeta que se llame: forms.py (que hay que crear clases como los models.py)
+y va a contener esto:
+
+```bash
+
+from django import forms 
+
+class CursoForm(forms.Form):
+    # es lo mismo que para hacer un modelo pero en este caso usamos
+    # forms.Form en vez de models.Model
+    # y no usamos los tipos de datos de la base de datos sino los de los formularios
+    # por ejemplo forms.CharField en vez de models.CharField
+    nombre = forms.CharField(max_length=100, label='Nombre del Curso')
+    comision = forms.IntegerField(label='Comisión')
+    fecha_inicio = forms.DateField(label='Fecha de Inicio', widget=forms.SelectDateWidget())
+    fecha_fin = forms.DateField(label='Fecha de Fin', widget=forms.SelectDateWidget())
+    
+    def __str__(self):
+        return self.nombre
+```
+
+Como usamos el redirect en las views
+
+```bash
+#las importamos:
+from django.shortcuts import render, redirect
+
+return redirect('inicio')
+
+#de donde salio ese inicio??
+#simple salio de la urls de la App donde a cada direcion le asignamos un nombre
+    path('', home, name='inicio'),
+```
+
+y como hacemos para que funcione bueno en el html le agregamos un detalle para que vea donde lo guarda
+
+
 
 ---

@@ -1,0 +1,21 @@
+{% extends "index.html" %}
+
+{% block title %}Crear curso{% endblock %}
+
+{% block header %}
+<h1>Crear un nuevo curso</h1>
+<p>Por favor completa el siguiente formulario:</p>
+{% endblock %}
+
+{% block main %}
+
+<!-- usamos method no action -->
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}  <!-- Renderiza el formulario como párrafos -->
+    
+
+    <button type="submit">Crear Curso</button>
+</form>
+
+{% endblock%}
