@@ -236,7 +236,22 @@ class CursoForm(forms.Form):
 ```python
 from django.shortcuts import redirect
 
-return redirect('inicio')  # Usa el name de la URL
+def crear_curso(request):
+    if request.method == 'POST':
+        form = CursoForm(request.POST)
+        if form.is_valid():
+            curso = Curso(
+                #cleaned_data es lo que se guarda en el formulario
+                nombre=form.cleaned_data['nombre'],
+                duracion_semanas=form.cleaned_data['comision'],
+                fecha_inicio=form.cleaned_data['fecha_inicio'],
+            )
+            curso.save()
+            return redirect('inicio') # Usa el name de la URL
+        
+    elif request.method == 'GET':
+        form = CursoForm()                                          #aca mandamo el formulario vacio
+        return render(request, "mi_primer_app/crear_curso.html", {"form": form})
 ```
 
 ---
